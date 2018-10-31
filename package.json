@@ -4,7 +4,8 @@
   "description": "an easy javascript framework map object to html,like vue",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "webpack --config webpack.config.js"
   },
   "keywords": [
     "javascript",
@@ -12,5 +13,15 @@
     "vue"
   ],
   "author": "hqiwen",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel-loader": "^8.0.4",
+    "eslint": "^5.8.0",
+    "webpack": "^4.23.1",
+    "webpack-cli": "^3.1.2"
+  },
+  "dependencies": {
+    "@babel/core": "^7.1.2",
+    "@babel/preset-env": "^7.1.0"
+  }
 }

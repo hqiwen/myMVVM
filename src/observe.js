@@ -1,42 +1,42 @@
-import { Dep }  from './dep'
+import { Dep }  from "./dep"
 
-export function observe(value, asRootData) {
-    if (!value || typeof value !== 'object') {
+export function observe(value) {
+    if (!value || typeof value !== "object") {
         return
     }
-    return new Observer(value).walk();
+    return new Observer(value).walk()
 }
 
 class Observer {
     constructor(value) {
-        this.value = value;
+        this.value = value
     }
     walk() {
-        let obj = this.value;
+        let obj = this.value
         Object.keys(obj).forEach(key => {
-            this.observeProperty(obj, key, obj[key]);
-        });
+            this.observeProperty(obj, key, obj[key])
+        })
     }
     observeProperty(obj, key, val) {
-        let dep = new Dep();
+        let dep = new Dep()
         let childOb = observe(val)
         Object.defineProperty(obj, key, {
             enumerable: true,
             configurable: true,
             get: function () {
                 if (Dep.target) {
-                    dep.depend();
+                    dep.depend()
                 }
                 if (childOb) {
                     childOb.dep.depend()
                 }
-                return val;
+                return val
             },
             set: function (newVal) {
                 if (val === newVal || (newVal !== newVal && val !== val)) {
                     return
                 }
-                val = newVal;
+                val = newVal
                 childOb = observe(newVal)
                 dep.notify()
             }

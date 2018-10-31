@@ -1,10 +1,11 @@
+let uid = 0
+Dep.target = null
 export class Dep{
-    uid = 0;
-    target = null;
     construct() {
-        this.id = Dep.uid + 1;
+        uid = uid + 1
+        this.id = uid
         //watchers
-        this.subs = [];
+        this.subs = []
     }
     addSub(sub) {
         this.subs.push(sub)
@@ -23,6 +24,6 @@ export class Dep{
     //add Watcher 
     //Dep.target : new Watcher
     depend(){
-        Dep.target.addDep(this);
+        Dep.target.addDep(this)
     }
-};
+}
