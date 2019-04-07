@@ -1,4 +1,4 @@
-import { Watcher } from "./watcher"
+import { Watcher } from "./watcher";
 
 export class Compile{
     /**
@@ -27,7 +27,7 @@ export class Compile{
             let reg = /\{\{((?:.|\n)+?)\}\}/
 
             if (self.isElementNode(node)) {
-                self.compileElement(node)
+                self.compile(node)
             } else if (self.isTextNode(node) && reg.test(text)) {
                 self.compileText(node, RegExp.$1)
             }
@@ -52,11 +52,14 @@ export class Compile{
         Array.slice.call(nodeAttrs).forEach(attr => {
             var attrName = attr.name
             if (self.isDirective(attrName)) {
-                var exp = attr.value
-                var dir = attrName.subString(2)
+                //<span x-text="content"></span>
+                var exp = attr.value//content
+                var dir = attrName.subString(2)//text
                 if (self.isEventDirective(dir)) {
+                    //事件指令，如x-on:click
                     compileUtil.eventHandle(node, self.$vm, exp, dir)
                 } else {
+                    //普通指令
                     compileUtil[dir] && compileUtil[dir](node, self.$vm, exp)
                 }
                 node.removeAttribute(attrName)
@@ -108,10 +111,11 @@ const compileUtil = {
     },
     bind: function (node, vm, exp, dir) {
         let updateFn = updater[dir + "Updater"]
-        //TODO add before update
+        //第一次初始化视图
         updateFn && updateFn(node, this._getVmVal(vm, exp))
-
+        //watcher.get(),构造时触发getter，添加订阅器
         new Watcher(vm, exp, function (value, oldValue) {
+            //watcher.update(),添加执行更新函数
             updateFn && updateFn(node, value, oldValue)
         })
     },

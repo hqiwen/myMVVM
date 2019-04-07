@@ -1,4 +1,4 @@
-import Dep from "./dep"
+import Dep from "./dep";
 
 export class Watcher {
     /**
@@ -32,10 +32,11 @@ export class Watcher {
         let oldValue = this.value
         if (newValue === oldValue) return
         this.value = newValue
-        this.cb.call(this.vm, newValue, oldValue)
+        this.cb.call(this.vm, newValue, oldValue)//执行compile中的回调函数，更新视图
     }
     get() {
         Dep.target = this
+        //触发getter，将自己添加到dep
         let value = this.getter.call(this.vm, this.vm)
         Dep.target = null
         return value

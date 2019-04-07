@@ -1,6 +1,6 @@
 let uid = 0
 Dep.target = null
-export class Dep{
+export default class Dep{
     construct() {
         uid = uid + 1
         this.id = uid

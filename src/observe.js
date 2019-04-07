@@ -1,4 +1,4 @@
-import { Dep }  from "./dep"
+import Dep from "./dep";
 
 export function observe(value) {
     if (!value || typeof value !== "object") {
@@ -16,6 +16,7 @@ class Observer {
         Object.keys(obj).forEach(key => {
             this.observeProperty(obj, key, obj[key])
         })
+        return obj;
     }
     observeProperty(obj, key, val) {
         let dep = new Dep()
