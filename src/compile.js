@@ -1,5 +1,9 @@
 import { Watcher } from "./watcher";
 
+export function compileMVVM(el, vm) {
+    new Compile(el, vm);
+}
+
 export class Compile{
     /**
      *Creates an instance of Compile.
